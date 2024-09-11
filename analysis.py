@@ -9,22 +9,17 @@ wdi = pd.read_csv(
     "https://media.githubusercontent.com/media/nickeubank/MIDS_Data/master/World_Development_Indicators/wdi_small_tidy_2015.csv"
 )
 
-columns = [
-    "Mortality rate, infant (per 1,000 live births)",
-    "GDP per capita (constant 2010 US$)",
-    "Country Name",
-]
-df = wdi[columns]
+wdi["Log GDP Per Capita"] = np.log(wdi["GDP per capita (constant 2010 US$)"])
 
 pds_class_plot = (
     so.Plot(
         wdi,
-        x="GDP per capita (constant 2010 US$)",
+        x="Log GDP Per Capita",
         y="Mortality rate, infant (per 1,000 live births)",
     )
     .add(so.Line(), so.PolyFit(order=2))
     .add(so.Dot())
-    .label(title="Mortality rate, infant (per 1,000 live births)")
+    .label(title="Log GDP and Infant Mortality Rate")
     .theme({**style.library["seaborn-v0_8-whitegrid"]})
 )
 
